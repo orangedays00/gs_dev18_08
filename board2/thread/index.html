@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<?php
+	$webRoot = $_SERVER['DOCUMENT_ROOT'];
+	include_once($webRoot."/board2/src/function.php");
+
+	$threadInfo = getThreadInfo();
+	// var_dump($threadInfo);
+
+	$thread_id = $threadInfo["thread_id"];
+	$title = $threadInfo["title"];
+	$count = $threadInfo["count"];
+	$closeFlg = $threadInfo["closeFlg"];
+	$updateTime = $threadInfo["updateTime"];
+
+	// var_dump($thread_id);
+	// var_dump($title);
+	// var_dump($count);
+	// var_dump($closeFlg);
+	// var_dump($updateTime);
+
+	$title = $title.'（'.$count.'）';
+?>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title><?php print $title; ?></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://localhost/board2/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://localhost/board2/assets/css/myStyle.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://localhost/board2/assets/js/autosize.min.js"></script>
+	<script>
+	$(function(){
+		autosize($('textarea'));
+	});
+	</script>
+</head>
+
+	<body>
+		<header>
+			<h1 id="logo">
+				<a href="/board2/">スレッド式掲示板</a>
+			</h1>
+		</header>
+		<div class="container-fluid">
+			<section class="container">
+				<div class="row">
+					<main class="col-md-9">
+
+						<section class="threadDetail">
+							<?php
+								/** レス一覧を取得する */
+								$responseList = getResponseList($thread_id);
+						
+								if(count($responseList) == 0){
+									p('このスレッドは存在しません。');
+									return;
+								}
+							?>
+						
+							<h2><?php p($title); ?></h2>
+						
+							<div id="responseList">
+						
+							<?php
+								/** 取得したレスを全て表示する */
+								foreach($responseList as $response){
+									if($response["messageType"] == 0){
+										outputResponseParent($response);
+									} else {
+										outputResponseChild($response);
+									}
+								}
+							?>
+						
+							</div>
+							<input type="hidden" id="thread_id" value="<?php p($thread_id); ?>">
+						</section>
+						<?php
+							$formTitle = "返信フォーム";
+						?>
+						<?php if($closeFlg != 1){ ?>
+							<h2><?php p($formTitle); ?></h2>
+							<section id="inputForm">
+							
+							<?php if(isResponseForm()){ ?>
+								<div class="form-group">
+									<p class="control-label"><b>スレッド作成者ですか？</b></p>
+									<div class="radio-inline">
+										<input type="radio" id="isMainYes" name="isMain" value="1" style="ime-mode: active" maxlength="15" onclick="formChange()">
+										<label for="isMainYes" class="radio">はい</label>
+									</div>
+									<div class="radio-inline">
+										<input type="radio" id="isMainNo" name="isMain" value="2" style="ime-mode: active" maxlength="15" onclick="formChange()" checked>
+										<label for="isMainNo" class="radio">いいえ</label>
+									</div>
+								</div>
+							<?php } ?>
+
+							<div class="form-group" id="name-group">
+								<label>名前</label>
+								<input type="text" id="name" class="form-control" placeholder="" >
+							</div>
+
+							<div class="form-group">
+									<label>メッセージ</label>
+									<textarea id="message" class="form-control" rows="4" placeholder=""></textarea>
+							</div>
+
+							<div class="form-group" id="respass-group">
+								<label for="respass">編集・削除用パスワード</label>
+								<input type="password"  id="respass" name="respass" class="form-control" minlength="4">
+								<label id="respassLabel" class="supplement">英数字4文字以上。</label>
+							</div>
+
+							<div class="form-group" id="pass-group">
+								<label for="pass">スレッド作成時のパスワード</label>
+								<input type="password"  id="pass" name="pass" class="form-control" minlength="4">
+								<label id="passLabel" class="supplement">英数字4文字以上</label>
+							</div>
+
+
+							<?php if(isResponseForm()){ ?>
+								<div class="form-group" id="close-group">
+									<p class="control-label"><b>スレッドを閉じますか？</b></p>
+									<div class="radio">
+										<input type="radio" id="closeY" name="close" value="1" style="ime-mode: active" >
+										<label for="closeY" class="radio">　はい（この投稿が最後になります。）</label>
+									</div>
+									<div class="radio">
+										<input type="radio" id="closeNo" name="close" value="0" style="ime-mode: active"  checked>
+										<label for="closeNo" class="radio">　いいえ（引き続き投稿できます。）</label>
+									</div>
+								</div>
+							<?php } ?>
+							<input type="hidden" id="thread_id" name="thread_id" value="<?php print $thread_id ?>">
+							<div class="text-center">
+								<button type="button" class="btn btn-primary" id="send">送信する</button>
+							</div>
+							</section>
+							<?php  }else{ ?>
+								<p>このスレッドはスレッド作成者により締め切られました。</p>
+							<?php } ?>
+
+					</main>
+				</div>
+				</section>
+		</div>
+		<footer id="footer">
+		</footer>
+
+		<script type="text/javascript">
+			function formChange(){
+				if($('#isMainYes').prop('checked')){
+					/* スレッド主の場合 */
+					$("#name-group").hide("fast");
+					$("#icon-group").hide("fast");
+					$("#close-group").show("fast");
+					$("#respass-group").show("fast");
+					$("#pass-group").show("fast");
+					$("#message").attr("placeholder","返信メッセージを入力してください");
+					$("#passLabel").html("スレッド作成時と同じパスワードを入力してください。");
+				}else{
+					/* スレッド主以外の場合 */
+					$("#name-group").show("fast");
+					$("#icon-group").show("fast");
+					$("#close-group").hide("fast");
+					$("#respass-group").show("fast");
+					$("#pass-group").hide("fast");
+					$("#name").attr("placeholder", "名前を入力してください");
+					$("#message").attr("placeholder","返信メッセージを入力してください");
+					$("#passLabel").html("英数字8文字以上");
+				}
+			}
+
+
+			/* メッセージをDBへ登録 */
+			$(document).ready(function(){
+				formChange();
+				/**
+				 * 送信ボタンクリック
+				 */
+				$('#send').click(function(){
+					/* POSTメソッドで送るデータの定義 var data = {パラメータ名 : 値}; */
+					var data = {
+						thread_id : $('#thread_id').val(),
+						name : $('#name').val(),
+						message : $('#message').val(),
+						respass: $("#respass").val(),
+						pass : $('#pass').val(),
+						isMain : $("[name=isMain]:checked").val(),
+						close : $("[name=close]:checked").val()
+					};
+			
+					/**
+					 * Ajax通信メソッド
+					 * type  : HTTP通信の種類
+					 * url   : リクエスト送信先のURL
+					 * data  : サーバに送信する値
+					 */
+					$.ajax({
+						type: "POST",
+						url: "/board2/src/responsePost.php",
+						data: data,
+						async:false,
+						/**
+						 * Ajax通信が成功した場合に呼び出されるメソッド
+						 */
+						success: function(data, dataType){
+							if(data =='noName'){
+								alert('名前を入力してください');
+							}else if(data =='noMsg'){
+								alert('メッセージを入力してください');
+							}else if(data =='passDif'){
+								alert('パスワードが違います。');
+							}else{
+								alert('送信完了しました。画面をリロードします。');
+								location.href="/board2/thread/" + $('#thread_id').val() + "/";
+							}
+						},
+						/**
+						 * Ajax通信が失敗した場合に呼び出されるメソッド
+						 */
+						error: function(XMLHttpRequest, textStatus, errorThrown){
+							/* エラーメッセージの表示 */
+							alert('Error : ' + errorThrown);
+						}
+					});
+			
+					/* 「送信する」を押下して、ページをリロードしないように。送信成功した場合にリロード */
+					return false;
+				});
+			});
+</script>
+
+	</body>
+</html>

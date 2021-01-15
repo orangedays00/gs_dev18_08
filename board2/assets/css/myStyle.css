@@ -1,0 +1,303 @@
+@charset "utf-8";
+
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* 「opacity」を適用する箇所 */
+body {
+    animation-duration: 1s;
+    animation-name: opacity;
+    animation-iteration-count: 1;
+    font-family: Arial,Helvetica,"游ゴシック",YuGothic,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+    color: #333;
+}
+
+a {
+    transition: .4s;
+    -webkit-transition: .4s;
+    color: #666;
+}
+
+header {
+    /* border-top: 4px solid #59bada; */
+	border-bottom: 4px solid #e6b422;
+    margin: 10px;
+    height: 100px;
+}
+
+footer {
+    background: #555;
+    color: #fff;
+    height: 25px;
+    margin: 50px auto 0;
+}
+
+h1 a {
+	position: absolute;
+	font-size: 3rem;
+	font-weight: bold;
+	color: #e6b422;
+	text-decoration: none;
+	top: 30px;
+}
+
+h1 a:hover {
+    color: #e6b422;
+	text-decoration: none;
+}
+
+h3 {
+    margin: 50px 0 30px;
+}
+
+h3 a {
+    margin: 0 10px;
+    background: #e6b422;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+h3 a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* スレッド一覧 */
+.thread {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.1) inset;
+    background-repeat: no-repeat;
+	background-position: right;
+	background-size:20%;
+	margin-bottom: 20px;
+}
+
+.thread {
+    border: 4px solid #dcdcdc;
+}
+
+.thread h4 {
+    font-size: 28px;
+    color: #333;
+}
+
+.thread p {
+    padding: 0px 0px 10px;
+}
+
+.thread a.transmission {
+	background-color:rgba(255,255,255,0.6);
+	padding: 25px;
+	display: block;
+}
+
+.thread a.transmission h4 {
+	text-decoration: none;
+	display: inline-block;
+}
+
+.thread a.transmission p {
+	text-decoration: none;
+    font-weight: bold;
+    width: 80%;
+}
+
+.thread a.transmission p:hover {
+    text-decoration: none;
+}
+
+.thread a.transmission:hover {
+	background-color:rgba(255,255,255,0);
+	display: block;
+	color:#000;
+	font-weight: 900;
+}
+
+
+.thread a.transmission h4 {
+	font-weight: bold;
+}
+
+
+/* スレッド詳細ページ */
+.threadDetail {
+    margin: 50px 0px 10px;
+}
+
+#responseList {
+	margin: 0 auto 10px;
+	padding-top: 10px;
+	padding-bottom: 30px;
+	display: table;
+	width: 100%;
+}
+
+#responseList hr {
+    overflow: hidden;
+    margin: 0;
+}
+
+#responseList .response {
+	margin-bottom: 20px;
+}
+
+#responseList .response {
+    position: relative;
+    border: solid 2px #ccc;
+    padding: 0.2em 0.5em;
+    color: #454545;
+}
+
+
+#responseList .response p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    line-height: 1.8;
+}
+
+#responseList .response p.name {
+	padding-top: 10px;
+	line-height: 130%;
+}
+
+.radio-inline {
+    display: inline;
+    margin: 10px;
+}
+
+/* --入力フォーム-- */
+#inputForm {
+    margin-top: 0px;
+    padding: 15px;
+    background: linear-gradient(#fff1c1,#ffdf74);
+}
+
+label {
+    font-weight: bold;
+}
+
+#name, #post_name {
+    width: 30%;
+}
+
+#pass, #post_password, #respass, .delete-pass {
+    width: 20%;
+}
+
+.supplement {
+    text-align: left;
+    color:#aaa;
+    font-weight:normal
+}
+
+.text-center {
+    text-align: center;
+}
+
+.new-form {
+    margin: 50px 0 10px;
+}
+
+.btn-margin {
+    margin: 10px 20px;
+}
+
+.back-home {
+    margin-top: 50px;
+}
+
+.back-home a {
+    display: inline-block;
+    margin: 20px 10px;
+    background: #e6b422;
+    color: #fff;
+    border-radius: 5px;
+    padding: 6px 12px;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.search-area {
+    display: flex;
+    margin: 20px 0;
+    padding: 10px;
+    background: #fde291;
+}
+
+.search-label {
+    width: 100px;
+    margin: 10px 10px 10px 0;
+}
+
+.search-form {
+    display: flex;
+}
+
+.search-keyword {
+    width: 400px;
+    padding: 5px;
+}
+
+.search-btn {
+    margin: 0 20px;
+}
+
+.res-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-form-group {
+    margin-top: 20px;
+}
+
+.form-delete-group {
+    display: flex;
+    margin: 5px 0;
+}
+
+.delete-pass {
+    margin-right: 5px;
+}
+
+#editSend a {
+    text-decoration: none;
+    color: #000;
+}
+
+#editSend a:hover {
+    color: #000;
+}
+
+.now-message {
+    background: #fff;
+    padding: 6px 12px;
+}
+
+
+@media (max-width: 576px) {
+    header{
+        height: 70px;
+    }
+    h1 a{
+        font-size: 1.8rem;
+        left: 10px;
+    }
+    .thread{
+        width: 100%;
+    }
+    .container-fluid,
+    .container{
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+}

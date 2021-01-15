@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+body {
+	background: #fff;/*linear-gradient(to right,#ffa,#cff);*/
+}
+h1 a {
+	/* サイトタイトル */
+	color: #e6b422;
+}
+h1 a:hover{
+	/* サイトタイトル（マウス乗せたとき） */
+	color:#cca11f;
+}
+
+header {
+	/* サイトタイトル上下の横線 */
+	border-color:#e6b422;
+}
+
+footer{
+	/* 各ページ下部の */
+	background-color:#333;
+}
+
+.thread {
+	/* スレッド一覧の線 */
+	border: 4px solid #dcdcdc;
+	/* 要素にマウスが乗った時のアニメーションの速度 */
+	transition: .4s;
+    /* おまけ要素（こんなこともできる、という紹介。試しにコメント解除して見てみて！） */
+	/*transform: skewX(10deg);
+	box-shadow: -10px 10px #ddd;*/
+}
+.thread:hover{
+	border: 4px solid #a8a8a8;
+	/* おまけ要素（こんなこともできる、という紹介。試しにコメント解除して見てみて！） */
+	/*background-size: 25%;
+	box-shadow: -10px 10px #ccc;*/
+}
+
+#responseList .response {
+	/* レスポンスの背景色 */
+	/* background-color: #fff0cd; */
+	/* レスポンスの線の外側の色（影の設定） */
+	/* box-shadow:0px 0px 0px 5px #fff0cd; */
+	/* レスポンスの線の色 */
+	border-color:#ccc;
+	/* レスポンスのメッセージ文字色 */
+	color: #454545;
+}
+
+#inputForm{
+	/* 返信フォームの枠周りの影 */
+	/* box-shadow: 0px 0px 10px 2px #ace; */
+	/* 返信フォームの背景色 */
+	background: linear-gradient(#fff1c1,#ffdf74);
+}
+.thread-side a.transmission, 
+.thread a.transmission {
+	/* スレッド一覧のスレッドひとつの背景色（マウス乗せてない時） */
+	background-color: rgba(255,255,255,0.6);
+	/* （最後の数字は透明度。0にいくほど薄い。） */
+}
+
+.thread-side a.transmission:hover,
+.thread a.transmission:hover {
+	/* スレッド一覧のスレッドひとつの背景色（マウス乗せた時） */
+	background-color: rgba(255,255,255,0);
+	/* （最後の数字は透明度。0にいくほど薄い。） */
+}
+
+.thread h4 {
+	/* スレッド一覧のスレタイトル文字色 */
+	color:#a21e1e;
+}
+
+.new{
+	/* 「new」マークの文字色 */
+    color: #FFF;
+    /* 「new」マークの背景色 */
+    background: #F00;
+}
